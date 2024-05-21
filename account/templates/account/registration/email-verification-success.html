@@ -1,0 +1,26 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <style>
+    body {
+      background-color: gray;
+    }
+  </style>
+
+  <body>
+    <div class="container bg-white shadow-md p-5 form-layout">
+      <div class="text-center">
+        <i class="fa fa-check fa-3x text-succes" aria-hidden="true"></i>
+        <br /><br />
+
+        <h5><strong>Hesabınız başarılı bir şekilde onaylandı </strong></h5>
+        <hr />
+        <p>Lütfen giriş yapınız</p>
+          <a href="{%   url 'my-login' %}" class="btn btn-primary">Giriş Yap :D</a>
+      </div>
+    </div>
+  </body>
+{% endblock %}
+

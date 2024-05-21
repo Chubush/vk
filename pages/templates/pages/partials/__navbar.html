@@ -1,0 +1,71 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary justify-content-center" data-bs-theme="light">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'index' %}">
+      <img src="{% static 'images/logo.jpg' %}" alt="Virtual Kingdom" width="30" height="30" class="d-inline-block align-top">
+      Virtual Kingdom
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown" data-bs-theme="light">
+          <!-- Navbar items -->
+        </li>
+      </ul>
+      <!-- Arama girişi başlangıcı -->
+      <form class="d-flex" action="{% url 'search' %}" method="GET">
+        <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search" id="searchInput">
+        <button class="btn btn-outline-light" type="submit">Search</button>
+      </form>
+      <!-- Arama girişi bitişi -->
+      {% if user.is_authenticated %}
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a href="{% url 'logout' %}" class="btn btn-alert navbar-btn text-white" type="button">Logout</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'dashboard' %}" class="btn btn-alert navbar-btn text-white" type="button">Dashboard</a>
+        </li>
+      </ul>
+      {% else %}
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a href="{% url 'register' %}" class="btn btn-alert navbar-btn text-white" type="button">Register</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'my-login' %}" class="btn btn-alert navbar-btn text-white" type="button">Login</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'about' %}" class="btn btn-alert navbar-btn text-white" type="button">About</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'contact' %}" class="btn btn-alert navbar-btn text-white" type="button">Contact</a>
+        </li>
+        <!-- Discord adresi -->
+        <li class="nav-item">
+          <a href="https://discord.gg/ep8yAGfY" target="_blank" class="btn btn-alert navbar-btn text-white" type="button">Discord</a>
+        </li>
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- Optional JavaScript for enhanced interactivity -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('mouseover', function() {
+        item.style.transform = 'scale(1.1)';
+        item.style.transition = 'transform 0.2s';
+      });
+      item.addEventListener('mouseout', function() {
+        item.style.transform = 'scale(1)';
+      });
+    });
+  });
+</script>
+

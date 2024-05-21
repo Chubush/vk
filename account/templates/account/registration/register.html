@@ -1,0 +1,125 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <style>
+    body {
+      background-color: #f0f0f0;
+    }
+
+    .form-layout {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+    }
+
+    .form-layout h3 {
+      margin-bottom: 20px;
+    }
+
+    .form-layout h5 {
+      margin-bottom: 10px;
+    }
+
+    .form-layout hr {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      border: 0;
+      border-top: 1px solid #dee2e6;
+    }
+
+    .form-layout input[type="text"],
+    .form-layout input[type="email"],
+    .form-layout input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .form-layout button[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .form-layout button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    .form-layout .text-center a {
+      text-decoration: none;
+      color: #007bff;
+    }
+  </style>
+
+  <body>
+    <br />
+
+    <div class="container bg-white shadow-md p-5 form-layout">
+      <h3 class="text-center"><i class="fa fa-id-card-o" aria-hidden="true"></i>  Hesabınızı oluşturun</h3>
+      <h5>Aramıza katılmak için bir adım at  </h5>
+      <hr />
+      <br />
+
+      <form id="registration-form" method="POST" autocomplete="off" onsubmit="return validateForm()">
+        {% csrf_token %}
+
+        {{ form.username|as_crispy_field }}
+        <br />
+        <br />
+
+        {{ form.email|as_crispy_field }}
+        <br />
+        <br />
+
+        {{ form.password1|as_crispy_field }}
+        <br />
+        <br />
+
+        {{ form.password2|as_crispy_field }}
+        <br />
+        <br />
+
+        <button type="submit" class="btn btn-primary navbar-btn text-white w-100 p-2">&nbsp;Hesap Oluştur</button>
+
+        <br /><br />
+
+        <div class="text-center">
+          <a href="{% url "my-login" %}">Mevcut bir hesabın varsa giriş yapmak için tıkla kanks </a>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      function validateForm() {
+        var username = document.forms["registration-form"]["id_username"].value;
+        var email = document.forms["registration-form"]["id_email"].value;
+        var password1 = document.forms["registration-form"]["id_password1"].value;
+        var password2 = document.forms["registration-form"]["id_password2"].value;
+
+        if (username == "" || email == "" || password1 == "" || password2 == "") {
+          alert("Tüm alanları doldurunuz.");
+          return false;
+        }
+        if (password1 != password2) {
+          alert("Şifreler eşleşmiyor.");
+          return false;
+        }
+        return true;
+      }
+    </script>
+  </body>
+  <br /><br />
+{% endblock %}

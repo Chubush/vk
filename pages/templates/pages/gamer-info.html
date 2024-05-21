@@ -1,0 +1,84 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <style>
+        .card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .card-img-top {
+            max-height: 400px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+        }
+        .card-header, .card-footer {
+            background-color: #f8f9fa;
+        }
+        .card-body ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .card-body ul li {
+            background: #e9ecef;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="text-center">{{ gamer.username }} Bilgileri</h2>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Nickname:</strong> {{ gamer.nickname }}</p>
+                        <p><strong>Yaş:</strong> {{ gamer.age }}</p>
+                        <p><strong>En İyi Oyun:</strong> {{ gamer.best_game.name }}</p>
+                        <p><strong>Oynadığı Oyunlar:</strong></p>
+                        <ul>
+                            {% for game in gamer.games_played.all %}
+                                <li>{{ game.name }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% if gamer.profile_image %}
+                            <img src="{{ gamer.profile_image.url }}" class="card-img-top mt-3" alt="{{ gamer.name }}" />
+                        {% else %}
+                            <img src="{% static 'images/defaultProfile.jpg' %}" class="card-img-top mt-3" alt="Default Profile Image" />
+                        {% endif %}
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="{% url 'index' %}" class="btn btn-primary">Ana Sayfaya Dön</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const images = document.querySelectorAll('.card-img-top');
+            images.forEach(image => {
+                image.addEventListener('mouseover', function() {
+                    image.style.transform = 'scale(1.05)';
+                    image.style.transition = 'transform 0.2s';
+                });
+                image.addEventListener('mouseout', function() {
+                    image.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

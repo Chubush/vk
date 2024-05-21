@@ -1,0 +1,81 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <style>
+    .card-img-top {
+      max-height: 300px;
+      width: 100%;
+      object-fit: cover;
+    }
+    .card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .card-body {
+      text-align: center;
+    }
+
+    .row {
+      justify-content: center;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .btn-primary {
+      display: block;
+      margin: 0 auto 20px;
+    }
+  </style>
+  <div class="container">
+    <h1>Oyuncular</h1>
+    <a href="{% url 'games_list' %}" class="btn btn-primary">Oyunlar</a> <!-- Oyunlar butonu -->
+    <hr>
+    <div class="row">
+      {% for gamer in gamers %}
+        <div class="col-md-4 mb-4">
+          <a href="{{ gamer.id }}" style="text-decoration: none; color: inherit;">
+            <div class="card">
+              {% if gamer.profile_image %}
+                <img src="{{ gamer.profile_image.url }}" class="card-img-top" alt="{{ gamer.name }}">
+              {% else %}
+                <img src="{% static 'images/defaultProfile.jpg' %}" class="card-img-top" alt="Default Profile Image">
+              {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{ gamer.name }}</h5>
+                <p class="card-text">Yaş: {{ gamer.age }}</p>
+                <p class="card-text">Takma Ad: {{ gamer.nickname }}</p>
+                <p class="card-text">En İyi Oyun: {{ gamer.best_game.name }}</p>
+                <p class="card-text">Oyandığı oyunlar:
+                  {% for game in gamer.games_played.all %}
+                    {{ game.name }}{% if not forloop.last %}, {% endif %}
+                  {% endfor %}
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Optional JavaScript for enhanced interactivity -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.addEventListener('mouseover', function() {
+          card.style.transform = 'scale(1.05)';
+        });
+        card.addEventListener('mouseout', function() {
+          card.style.transform = 'scale(1)';
+        });
+      });
+    });
+  </script>
+{% endblock %}

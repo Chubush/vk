@@ -1,0 +1,80 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <style>
+    .card-img-top {
+      max-height: 300px;
+      width: 100%;
+      object-fit: cover;
+    }
+    .card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .card-body {
+      text-align: left;
+    }
+
+    .row {
+      justify-content: center;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .btn-primary {
+      display: block;
+      margin: 0 auto 20px;
+    }
+  </style>
+  <div class="container">
+    <h1>Oyunlar</h1>
+    <a href="{% url 'gamers' %}" class="btn btn-primary">Oyuncular</a> <!-- Oyuncular butonu -->
+    <hr>
+    <div class="row">
+      {% for game in games %}
+        <div class="col-md-6 mb-4">
+          <a href="{{ game.id }}" style="text-decoration: none; color: inherit;">
+            <div class="card">
+              {% if game.image %}
+                <img src="{{ game.image.url }}" class="card-img-top" alt="{{ game.name }}">
+              {% else %}
+                <img src="{% static 'images/defaultGame.jpg' %}" class="card-img-top" alt="Default Game Image">
+              {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{ game.name }}</h5>
+                <p class="card-text"><strong>Kategori:</strong> {{ game.category }}</p>
+                <p class="card-text">{{ game.description }}</p>
+                <p class="card-text"><strong>Oyuncular:</strong>
+                  {% for gamer in game.gamers.all %}
+                    {{ gamer.name }}{% if not forloop.last %}, {% endif %}
+                  {% endfor %}
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Optional JavaScript for enhanced interactivity -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.addEventListener('mouseover', function() {
+          card.style.transform = 'scale(1.05)';
+        });
+        card.addEventListener('mouseout', function() {
+          card.style.transform = 'scale(1)';
+        });
+      });
+    });
+  </script>
+{% endblock %}

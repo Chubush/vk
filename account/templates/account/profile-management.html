@@ -1,0 +1,25 @@
+{% extends 'pages/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container bg-white shadow-md p-5 mt-4 form-layout">
+    <h3><i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;Profil Yönetimi</h3>
+    <p>Hesabınızı Yönetin</p>
+    <hr>
+    <br>
+</div>
+
+<div class="container bg-white shadow-md p-5 mt-4 form-layout">
+    <h4>Profilinizi Güncelleyin</h4>
+    <p>Hesabınızı değiştirmekte özgürsünüz</p>
+    <hr>
+    <br>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Profili Güncelle</button>
+        <br><br>        
+    </form>
+</div>
+
+{% endblock %}

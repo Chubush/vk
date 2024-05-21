@@ -1,0 +1,39 @@
+{% load static %}
+<html lang="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}
+    {% endblock %}</title>
+    <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="{% static 'images/logo.jpg' %}" type="image/jpg">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+{% include 'pages/partials/__navbar.html' %}
+<div class="content">
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"
+        integrity="sha512-2uw0QRklF5KQ4vVS9vawjF9EyEDvEMpMxY9uY6/XI2ubm0XgOe6G6gOT0LSk3sOv2idZnt+24tXBGiZ1GqffGw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+</script>
+</body>
+{% include 'pages/partials/__footer.html' %}
+</html>
+

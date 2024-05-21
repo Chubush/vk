@@ -1,0 +1,35 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block content %}
+<   <div class="container mt-5">
+    <h1 class="mb-4">Search Results</h1>
+    <form class="mb-4">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search..." name="q" value="{{ request.GET.q }}">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
+    <div class="row">
+        {% if gamers %}
+            {% for gamer in gamers %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="{{ gamer.profile_image.url }}" class="card-img-top" alt="{{ gamer.username }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ gamer.username }}</h5>
+                            <p class="card-text">Age: {{ gamer.age }}</p>
+                            <p class="card-text">Best Game: {{ gamer.best_game }}</p>
+                            <!-- Diğer bilgileri buraya ekleyebilirsiniz -->
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col">
+                <p>No results found.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

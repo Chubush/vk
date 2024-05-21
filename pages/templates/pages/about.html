@@ -1,0 +1,76 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div id="about" class="col-md-8 offset-md-2 text-center">
+            <h2 class="mb-4">HAKKIMIZDA</h2>
+            <img src="{% static 'images/defaultProfile.jpg' %}" class="img-fluid rounded-circle mb-4" alt="VirtualKingdom" width="400" height="400">
+            <p class="h4">
+                VirtualKingdom, 2011 yılında öğrencilik yıllarında oluşturulmuş bir oyun klanıdır. Oyun dünyasında birçok farklı oyunu deneyerek zaman geçirdik, ancak başlangıçta League of Legends ile tanıştık. İlk başlarda sadece birkaç arkadaşla takılmaya başladık, ancak kısa sürede klanımızın üye sayısı artmaya başladı. Arkadaşlar arasında kurduğumuz bu küçük topluluk, zamanla daha büyük bir aile haline geldi. VirtualKingdom, sadece oyun oynamak için bir araya gelmekle kalmadı, aynı zamanda gerçek dünyada da yakın dostluklar kuruldu. League of Legends'da bir araya gelerek, birlikte yarışmak ve rekabet etmek bizim için unutulmaz anlar yarattı. Zaman zaman 20 kişilik büyük gruplarla oynadık ve epik zaferler kazandık. Ancak bazen sadece 3-4 kişi olarak bir araya gelip, eğlenceli ve samimi bir ortamda vakit geçirdik. VirtualKingdom, oyun dünyasında ve gerçek hayatta birlikte büyüyen bir topluluk haline geldi. Klanımız, birbirimize destek olmak, birlikte gelişmek ve birlikte başarıya ulaşmak için bir araya gelmiş bir dostluk ve dayanışma ağıdır. League of Legends'daki başarılarımızın yanı sıra, klanımızın ruhu ve birlikteliği bizim için her zaman en değerli olanı olmuştur. Her bir üye, VirtualKingdom ailesinin bir parçası olmaktan gurur duymaktadır ve bu bağlılık, klanımızı güçlü kılmıştır. Bugün bile, oyun dünyasında birçok hatıra biriktirdik, ancak en değerlisi, VirtualKingdom'un birlikte geçirdiği o eşsiz ve unutulmaz zamanlardır.
+             </p>
+        </div>
+    </div>
+    <div class="row mt-5 text-center">
+        <div class="col-12">
+            <h1> <--  Bütün Aile --> </h1>
+        </div>
+        {% for gamer in gamers %}
+        <div class="col-md-4 mb-4">
+            <div class="image-container">
+                <a href="{% url 'gamer_info' gamer.id %}">
+                    <img src="{{ gamer.profile_image.url }}" alt="{{ gamer.username }}" class="img-fluid gallery-img rounded">
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .image-container {
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%; /* Kare görünüm için aynı genişlik ve yükseklik oranı */
+        position: relative;
+        overflow: hidden;
+    }
+
+    .image-container img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Resim boyutlarını korurken resmi kesme */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .image-container img:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Yeni eklenen stil */
+    #about {
+        opacity: 0;
+        transform: translateY(-50px);
+        transition: opacity 1s, transform 1s;
+    }
+
+    #about.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<script>
+    // Sayfa yüklendiğinde animasyonu başlat
+    document.addEventListener('DOMContentLoaded', function () {
+        const aboutSection = document.getElementById('about');
+        // aboutSection elementini göstermek için visible sınıfını ekleyin
+        aboutSection.classList.add('visible');
+    });
+</script>
+{% endblock %}

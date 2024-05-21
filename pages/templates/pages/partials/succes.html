@@ -1,0 +1,23 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+
+
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card border-0 shadow">
+        <img src="https://galeri12.uludagsozluk.com/510/sozluk-yazarlarinin-bacak-fotograflari_797453.jpg" class="card-img-top" alt="Teşekkür">
+        <div class="card-body text-center">
+          <h2 class="card-title mb-4">SEN VAR YA ADAMSIN ADAM! </h2>
+          <p class="card-text">İşlemini hallettin kanka </p>
+          <a href="{% url 'index' %}" class="btn btn-primary">Ana Sayfaya Dönmek BAS!!</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

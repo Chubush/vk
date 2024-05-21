@@ -1,0 +1,71 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4">İletişim Formu 🌟</h2>
+          <form id="contact" action="" method="POST" onsubmit="return validateForm()">
+            {% csrf_token %}
+            <div class="mb-3 row">
+              <label for="isim" class="col-sm-2 col-form-label">İsim 👤</label>
+              <div class="col-sm-10">
+                {{ form.isim }}
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label for="email" class="col-sm-2 col-form-label">E-mail 📧</label>
+              <div class="col-sm-10">
+                {{ form.email }}
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label for="konu" class="col-sm-2 col-form-label">Konu 📝</label>
+              <div class="col-sm-10">
+                {{ form.konu }}
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label for="mesaj" class="col-sm-2 col-form-label">Mesaj 💬</label>
+              <div class="col-sm-10">
+                {{ form.mesaj }}
+              </div>
+            </div>
+            <div class="mb-3">
+            </div>
+            <button name="submit" type="submit" class="btn btn-primary btn-block">GÖNDER 🚀</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .card {
+    border: none;
+    border-radius: 15px;
+  }
+
+  .form-label {
+    font-weight: bold;
+    color: #495057;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+{% endblock %}

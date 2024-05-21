@@ -1,0 +1,128 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <section class="welcome-section text-center">
+                <h1 class="display-4">Virtual Kingdom'e Hoş Geldiniz!</h1>
+                <p class="lead">Burada en sevdiğiniz oyunları keşfedin ve diğer oyuncularla etkileşime geçin.</p>
+                <img src="{% static 'images/homepage.jpg' %}" alt="homepage" class="img-fluid rounded mx-auto d-block shadow-lg">
+            </section>
+            <section class="menu-section text-center">
+                <h2 class="mb-4">Keşfetmek İçin Menüye Göz Atın</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card bg-primary text-white mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Oyunlar</h5>
+                                <p class="card-text">En popüler oyunları görüntüleyin ve keşfedin.</p>
+                                <a href="{% url 'games_list' %}" class="btn btn-light btn-lg btn-block rounded-pill">Oyunları Görüntüle</a>
+                                <img src="{% static 'images/games.webp' %}" class="img-fluid rounded-circle mt-4 mx-auto d-block shadow" alt="Oyunlar">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-secondary text-white mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Oyuncular</h5>
+                                <p class="card-text">Diğer oyuncuların profillerini görüntüleyin ve iletişime geçin.</p>
+                                <a href="{% url 'gamers' %}" class="btn btn-light btn-lg btn-block rounded-pill">Oyuncuları Görüntüle</a>
+                                <img src="{% static 'images/gamers.jpg' %}" class="img-fluid rounded-circle mt-4 mx-auto d-block shadow" alt="Oyuncular">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="dynamic-section">
+                <h2 class="text-center">EN ÇOK ÇEŞİT OYUN OYNAYAN 3 OYUNCU</h2>
+                <hr>
+                <br>
+                <h5 class="text-center">Ana Sayfaya Çıkabilmek için Oynadığınız oyunları artırabilirsiniz.</h5>
+                <div id="dynamic-content" class="row"></div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<style>
+    .welcome-section {
+        padding: 100px 0;
+        background-color: #f8f9fa;
+    }
+
+    .menu-section {
+        padding: 50px 0;
+    }
+
+    .card {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .dynamic-item {
+        margin-top: 20px;
+        transition: transform 0.3s, opacity 1s;
+        opacity: 0;
+    }
+
+    .dynamic-item.active {
+        opacity: 1;
+    }
+
+    .dynamic-item .card {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .dynamic-item .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dynamicContent = document.getElementById('dynamic-content');
+
+        // Dinamik içerik oluşturma
+        const gamers = [
+            {% for gamer in top_gamers %}
+                {
+                    name: '{{ gamer.username }}',
+                    image: '{% static gamer.profile_image %}',
+                    description: '{{ gamer.best_game }}'
+                },
+            {% endfor %}
+        ];
+
+        // Her oyun için kart oluştur
+        gamers.forEach(gamer => {
+            const card = document.createElement('div');
+            card.classList.add('col-md-4', 'dynamic-item');
+            card.innerHTML = `
+                <div class="card bg-light mb-4 shadow-sm">
+                    <img src="${gamer.image}" class="card-img-top rounded-circle mx-auto d-block mt-3" alt="${gamer.name}" style="width: 150px; height: 150px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">${gamer.name}</h5>
+                        <p class="card-text">${gamer.description}</p>
+                    </div>
+                </div>
+            `;
+            dynamicContent.appendChild(card);
+        });
+
+        // Animasyonun başlaması için setTimeout kullanılıyor
+        setTimeout(function() {
+            const dynamicItems = document.querySelectorAll('.dynamic-item');
+            dynamicItems.forEach(item => {
+                item.classList.add('active');
+            });
+        }, 100);
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <style>
+    .game-detail-container {
+      max-width: 800px; /* Genişliği artırarak daha dolu dolu görünmesini sağladık */
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+    }
+    .game-detail-container h1 {
+      font-size: 32px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .game-detail-container img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px;
+      border-radius: 10px;
+    }
+    .game-detail-container p {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    .game-detail-container h2 {
+      font-size: 24px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+    }
+    .game-detail-container ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .game-detail-container li {
+      font-size: 16px;
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+    .game-detail-container li:last-child {
+      border-bottom: none;
+    }
+  </style>
+  <div class="game-detail-container">
+    <h1>{{ object.name }} Detayları</h1>
+    <img src="{{ object.image.url }}" alt="{{ object.name }} Oyun Görseli">
+    <p><strong>Kategori:</strong> {{ object.category }}</p>
+    <p><strong>Açıklama:</strong> {{ object.description }}</p>
+
+    <h2>Oyunu Oynayanlar</h2>
+    <ul>
+        {% for gamer in object.best_players.all %}
+            <li>{{ gamer.username }}</li>
+        {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Optional JavaScript for enhanced interactivity -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const images = document.querySelectorAll('.game-detail-container img');
+      images.forEach(image => {
+        image.addEventListener('mouseover', function() {
+          image.style.transform = 'scale(1.05)';
+          image.style.transition = 'transform 0.2s';
+        });
+        image.addEventListener('mouseout', function() {
+          image.style.transform = 'scale(1)';
+        });
+      });
+    });
+  </script>
+{% endblock %}
